@@ -299,20 +299,28 @@
     margin: 0 0 4px;
     line-height: 1;
   }
-  .sch-location {
+ .sch-location {
     font-family: "Jost", sans-serif;
-    font-size: 10px;
+    font-size: 11px; 
     letter-spacing: .05em;
     color: var(--gold);
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid var(--gold); /* خط ثابت تحت الكلمة عشان يبان إنه لينك */
+    padding-bottom: 2px;
     transition: all 0.3s ease;
-    display: inline-block;
+    display: inline-flex; /* عشان نخلي الأيقونة جنب الكلام */
+    align-items: center;
+    justify-content: center;
+    gap: 4px; /* مسافة بين الأيقونة والكلمة */
+  }
+  .sch-location svg {
+    width: 13px;
+    height: 13px;
   }
   .sch-location:hover {
     color: var(--ink);
-    border-bottom: 1px solid var(--ink);
+    border-bottom-color: var(--ink);
   }
 
   .countdown{
@@ -419,16 +427,23 @@
       </div>
 
       <!-- تفاصيل المواعيد واللوكيشن -->
+      <!-- تفاصيل المواعيد واللوكيشن -->
       <div class="schedule">
         <div class="schedule-item">
-          <p class="sch-title">Ceremony</p>
+          <p class="sch-title">إكليل الكنيسة</p>
           <p class="sch-time">5:00 PM</p>
-          <a href="https://www.google.com/maps/search/?api=1&query=كنيسة+السيدة+العذراء+مريم+العاشر+من+رمضان" target="_blank" class="sch-location">Virgin Mary Church</a>
+          <a href="https://www.google.com/maps/search/?api=1&query=كنيسة+السيدة+العذراء+مريم+العاشر+من+رمضان" target="_blank" class="sch-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            كنيسة السيدة العذراء
+          </a>
         </div>
         <div class="schedule-item">
-          <p class="sch-title">Reception</p>
+          <p class="sch-title">حفل الزفاف</p>
           <p class="sch-time">6:00 PM</p>
-          <a href="https://www.google.com/maps/search/?api=1&query=Royal+House+Hall+10th+of+Ramadan" target="_blank" class="sch-location">Royal House Hall</a>
+          <a href="https://maps.app.goo.gl/Dxb5V7zLDjWU8L287" target="_blank" class="sch-location">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            قاعة Royal House
+          </a>
         </div>
       </div>
 
