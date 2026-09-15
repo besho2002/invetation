@@ -8,12 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Mrs+Saint+Delafield&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 
-<!--
-  ══════════════════════════════════════════════════════════════════
-  EDIT ME — everything you need to personalize is down in <script>,
-  in the CONFIG object, plus the names/photo in the HTML below.
-  ══════════════════════════════════════════════════════════════════
--->
 <style>
   :root{
     --paper:      #f6f1e9;
@@ -43,7 +37,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* subtle paper grain overlay across the whole page */
   body::after{
     content:"";
     position:fixed; inset:0; pointer-events:none; z-index:50;
@@ -54,7 +47,7 @@
   .stage {
     position: relative;
     width: 100%;
-    max-width: 600px; /* كبرنا دي من 420 لـ 600 */
+    max-width: 600px;
     height: 100vh;
     max-height: 860px;
     display: flex;
@@ -62,7 +55,6 @@
     justify-content: center;
   }
 
-  /* ---------- falling petals ---------- */
   .petals{ position:fixed; inset:0; pointer-events:none; z-index:5; }
   .petal{
     position:absolute; top:-5%;
@@ -81,7 +73,6 @@
     .petal{ animation: none; display:none; }
   }
 
-  /* ================= 3D SCENE ================= */
   .scene-outer{
     position:absolute; inset:0;
     display:flex; align-items:center; justify-content:center;
@@ -91,10 +82,10 @@
   }
   .scene-outer.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
 
-.scene {
+  .scene {
     position: relative;
-    width: 95vw; /* هيكبر وياخد 95% من عرض شاشة الموبايل */
-    max-width: 500px; /* كبرنا الحد الأقصى */
+    width: 90vw; /* خليناها 90 عشان تسيب مساحة صغيرة من الجناب */
+    max-width: 500px;
     aspect-ratio: 600 / 410;
     transform-style: preserve-3d;
     transform: rotateX(10deg) rotateY(0deg) rotate(-1.5deg);
@@ -102,22 +93,19 @@
     will-change: transform;
   }
 
-.table-shadow {
-  position: absolute;
-  left: 50%; 
-  bottom: -34px; 
-  width: 75%; /* نسبة مئوية بدل من 250px عشان يكبر ويصغر مع الظرف */
-  height: 34px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, rgba(44,38,32,.35) 0%, rgba(44,38,32,0) 72%);
-  filter: blur(2px);
-  transition: all .5s ease;
-}
+  .table-shadow {
+    position: absolute;
+    left: 50%; 
+    bottom: -34px; 
+    width: 75%;
+    height: 34px;
+    transform: translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(44,38,32,.35) 0%, rgba(44,38,32,0) 72%);
+    filter: blur(2px);
+    transition: all .5s ease;
+  }
+  .scene.open .table-shadow { width: 60%; opacity: .7; }
 
-.scene.open .table-shadow { 
-  width: 60%; /* نسبة مئوية بدل من 210px */
-  opacity: .7; 
-}
   .envelope{
     position:absolute; inset:0;
     transform-style: preserve-3d;
@@ -233,18 +221,17 @@
   .card-wrap {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    padding: 10px; /* قللنا المسافات الفاضية من الجناب لأقصى حاجة */
+    padding: 15px; 
     opacity: 0; transform: translateY(18px) scale(.96);
     transition: opacity .8s ease, transform .8s ease;
     z-index: 8;
   }
   .card-wrap.show { opacity: 1; transform: translateY(0) scale(1); }
 
-  /* الكارت نفسه (البوكس الداخلي) */
   .card {
     position: relative;
     width: 100%; 
-    max-width: 480px; /* كبرنا حجمه جداً عشان يملى الشاشة */
+    max-width: 480px; 
     padding: 34px 20px 28px;
     background: var(--paper);
     border: 1px solid var(--line);
@@ -322,6 +309,36 @@
     font-family:"Cormorant Garamond", serif; font-style:italic;
     font-size:12px; color:var(--ink-soft);
   }
+
+  /* ================= RESPONSIVE FIXES للموبايلات ================= */
+  @media (max-width: 480px) {
+    .card {
+      padding: 24px 15px 20px; /* تظبيط الهوامش للمساحات الضيقة */
+    }
+    .names {
+      font-size: 34px; /* تصغير اسم العرسان عشان ميضربش سطرين */
+    }
+    .photo {
+      width: 130px; /* تصغير الصورة شوية */
+      height: 130px;
+      margin-bottom: 15px;
+    }
+    .countdown {
+      gap: 12px; /* لم المسافات بين العداد */
+    }
+    .countdown .num {
+      font-size: 22px;
+    }
+    .countdown .sep {
+      font-size: 18px;
+    }
+    .cal-btn {
+      padding: 10px 15px; /* زرار الكاليندر */
+    }
+    .date {
+      margin-bottom: 15px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -340,7 +357,7 @@
           <div class="letter">
             <div class="letter-face">
               <div class="ornament"><svg viewBox="0 0 26 11"><path d="M0 5 H9 M17 5 H26 M13 0 L13 10 M9 5 A4 4 0 0 1 17 5"/></svg></div>
-              <p class="letter-mono" id="letterMono">L&amp;O</p>
+              <p class="letter-mono" id="letterMono">P&amp;M</p>
             </div>
           </div>
           <div class="fold">
@@ -349,7 +366,7 @@
           </div>
           <div class="fold-bottom paper-tex"></div>
           <div class="flap-top paper-tex">
-            <div class="seal"><span id="sealText">L&amp;O</span></div>
+            <div class="seal"><span id="sealText">P&amp;M</span></div>
           </div>
         </div>
       </div>
@@ -399,10 +416,10 @@
    EDIT THESE — couple names, wedding date/time, photo, monogram
    ══════════════════════════════════════════════════════════════ */
 const CONFIG = {
-  monogram: "L&O",
+  monogram: "P&M",
   eventTitle: "Peter & Mayvel's Wedding",
-  weddingDateISO: "2027-10-15T18:00:00",
-  durationHours: 4,
+  weddingDateISO: "2026-10-15T18:00:00",
+  durationHours: 6,
   location: "Cairo, Egypt"
 };
 
