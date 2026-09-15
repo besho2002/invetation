@@ -51,15 +51,15 @@
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
   }
 
-  .stage{
-    position:relative;
-    width:100%;
-    max-width:420px;
-    height:100vh;
-    max-height:860px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 600px; /* كبرنا دي من 420 لـ 600 */
+    height: 100vh;
+    max-height: 860px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /* ---------- falling petals ---------- */
@@ -91,16 +91,16 @@
   }
   .scene-outer.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
 
-  .scene {
-  position: relative;
-  width: 85vw; /* عرض متجاوب يملى 85% من شاشة الموبايل */
-  max-width: 400px; /* أقصى عرض للشاشات الكبيرة */
-  aspect-ratio: 600 / 410; /* بيحافظ على أبعاد الظرف الأصلية بدون تشوه */
-  transform-style: preserve-3d;
-  transform: rotateX(10deg) rotateY(0deg) rotate(-1.5deg);
-  transition: transform .25s ease-out;
-  will-change: transform;
-}
+.scene {
+    position: relative;
+    width: 95vw; /* هيكبر وياخد 95% من عرض شاشة الموبايل */
+    max-width: 500px; /* كبرنا الحد الأقصى */
+    aspect-ratio: 600 / 410;
+    transform-style: preserve-3d;
+    transform: rotateX(10deg) rotateY(0deg) rotate(-1.5deg);
+    transition: transform .25s ease-out;
+    will-change: transform;
+  }
 
 .table-shadow {
   position: absolute;
@@ -233,18 +233,19 @@
   .card-wrap {
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    padding: 15px; /* قللنا المسافات هنا عشان الكارت يقدر يكبر */
+    padding: 10px; /* قللنا المسافات الفاضية من الجناب لأقصى حاجة */
     opacity: 0; transform: translateY(18px) scale(.96);
     transition: opacity .8s ease, transform .8s ease;
     z-index: 8;
   }
   .card-wrap.show { opacity: 1; transform: translateY(0) scale(1); }
 
+  /* الكارت نفسه (البوكس الداخلي) */
   .card {
     position: relative;
     width: 100%; 
-    max-width: 420px; /* كبرنا العرض هنا بدل 340px */
-    padding: 34px 26px 28px;
+    max-width: 480px; /* كبرنا حجمه جداً عشان يملى الشاشة */
+    padding: 34px 20px 28px;
     background: var(--paper);
     border: 1px solid var(--line);
     box-shadow: 0 30px 70px -25px rgba(44,38,32,0.4);
