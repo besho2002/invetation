@@ -84,7 +84,7 @@
 
   .scene {
     position: relative;
-    width: 90vw; /* خليناها 90 عشان تسيب مساحة صغيرة من الجناب */
+    width: 90vw; 
     max-width: 500px;
     aspect-ratio: 600 / 410;
     transform-style: preserve-3d;
@@ -232,11 +232,14 @@
     position: relative;
     width: 100%; 
     max-width: 480px; 
-    padding: 34px 20px 28px;
+    padding: 34px 20px 24px;
     background: var(--paper);
     border: 1px solid var(--line);
     box-shadow: 0 30px 70px -25px rgba(44,38,32,0.4);
+    max-height: 95vh;
+    overflow-y: auto; /* لو الشاشة صغيرة أوي يقدر يسكرول جوه الكارت */
   }
+  .card::-webkit-scrollbar { display: none; }
   .card::before{
     content:""; position:absolute; inset:10px;
     border:1px solid var(--line);
@@ -258,16 +261,59 @@
   .date{
     text-align:center; font-family:"Jost",sans-serif;
     font-size:12px; letter-spacing:.2em; color:var(--gold);
-    text-transform:uppercase; margin:0 0 20px;
+    text-transform:uppercase; margin:0 0 15px;
   }
 
   .photo{
-    width:168px; height:168px; border-radius:50%;
-    margin:0 auto 20px; overflow:hidden;
+    width:140px; height:140px; border-radius:50%;
+    margin:0 auto 15px; overflow:hidden;
     border:1px solid var(--line);
     box-shadow: 0 0 0 6px var(--paper-deep), 0 12px 30px -12px rgba(44,38,32,.4);
   }
   .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* --- Schedule Section (الجدول واللوكيشن) --- */
+  .schedule {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+  }
+  .schedule-item {
+    text-align: center;
+    flex: 1;
+  }
+  .sch-title {
+    font-family: "Jost", sans-serif;
+    font-size: 10px;
+    letter-spacing: .15em;
+    color: var(--ink-soft);
+    text-transform: uppercase;
+    margin: 0 0 4px;
+  }
+  .sch-time {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin: 0 0 4px;
+    line-height: 1;
+  }
+  .sch-location {
+    font-family: "Jost", sans-serif;
+    font-size: 10px;
+    letter-spacing: .05em;
+    color: var(--gold);
+    text-transform: uppercase;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+  .sch-location:hover {
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
 
   .countdown{
     display:flex; justify-content:center; gap:18px;
@@ -305,39 +351,22 @@
   .cal-menu a:last-child{ margin-bottom:0; }
 
   .credit{
-    text-align:center; margin-top:20px;
+    text-align:center; margin-top:15px;
     font-family:"Cormorant Garamond", serif; font-style:italic;
     font-size:12px; color:var(--ink-soft);
   }
 
-  /* ================= RESPONSIVE FIXES للموبايلات ================= */
+  /* ================= RESPONSIVE FIXES ================= */
   @media (max-width: 480px) {
-    .card {
-      padding: 24px 15px 20px; /* تظبيط الهوامش للمساحات الضيقة */
-    }
-    .names {
-      font-size: 34px; /* تصغير اسم العرسان عشان ميضربش سطرين */
-    }
-    .photo {
-      width: 130px; /* تصغير الصورة شوية */
-      height: 130px;
-      margin-bottom: 15px;
-    }
-    .countdown {
-      gap: 12px; /* لم المسافات بين العداد */
-    }
-    .countdown .num {
-      font-size: 22px;
-    }
-    .countdown .sep {
-      font-size: 18px;
-    }
-    .cal-btn {
-      padding: 10px 15px; /* زرار الكاليندر */
-    }
-    .date {
-      margin-bottom: 15px;
-    }
+    .card { padding: 24px 15px 20px; }
+    .names { font-size: 34px; }
+    .photo { width: 120px; height: 120px; margin-bottom: 12px; }
+    .countdown { gap: 12px; margin-bottom: 15px; }
+    .countdown .num { font-size: 22px; }
+    .countdown .sep { font-size: 18px; }
+    .cal-btn { padding: 10px 15px; }
+    .schedule { gap: 15px; margin-bottom: 15px; }
+    .sch-time { font-size: 18px; }
   }
 </style>
 </head>
@@ -384,8 +413,23 @@
       <h1 class="names">Peter &amp; Mayvel</h1>
       <p class="date" id="dateLabel">15 · Oct · 2026</p>
 
+      <!-- حطينا اسم الصورة المظبوط اللي في الفولدر عندك -->
       <div class="photo">
-        <img src="photo.jpeg" alt="\t Peter & Mayvel">
+        <img src="photo.jpeg" alt="Peter & Mayvel">
+      </div>
+
+      <!-- تفاصيل المواعيد واللوكيشن -->
+      <div class="schedule">
+        <div class="schedule-item">
+          <p class="sch-title">Ceremony</p>
+          <p class="sch-time">5:00 PM</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=كنيسة+السيدة+العذراء+مريم+العاشر+من+رمضان" target="_blank" class="sch-location">Virgin Mary Church</a>
+        </div>
+        <div class="schedule-item">
+          <p class="sch-title">Reception</p>
+          <p class="sch-time">6:00 PM</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=Royal+House+Hall+10th+of+Ramadan" target="_blank" class="sch-location">Royal House Hall</a>
+        </div>
       </div>
 
       <div class="countdown" id="countdown">
@@ -418,9 +462,10 @@
 const CONFIG = {
   monogram: "P&M",
   eventTitle: "Peter & Mayvel's Wedding",
-  weddingDateISO: "2026-10-15T18:00:00",
+  // عدلت الوقت لـ 17:00 (5 مساءً بتوقيت الـ 24 ساعة) عشان يظبط على الكاليندر
+  weddingDateISO: "2026-10-15T17:00:00",
   durationHours: 6,
-  location: "Cairo, Egypt"
+  location: "Virgin Mary Church & Royal House Hall, 10th of Ramadan"
 };
 
 /* ---------- petals background ---------- */
