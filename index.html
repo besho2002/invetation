@@ -237,7 +237,7 @@
     border: 1px solid var(--line);
     box-shadow: 0 30px 70px -25px rgba(44,38,32,0.4);
     max-height: 95vh;
-    overflow-y: auto;
+    overflow-y: auto; 
   }
   .card::-webkit-scrollbar { display: none; }
   .card::before{
@@ -261,27 +261,28 @@
   .date{
     text-align:center; font-family:"Jost",sans-serif;
     font-size:12px; letter-spacing:.2em; color:var(--gold);
-    text-transform:uppercase; margin:0 0 15px;
+    text-transform:uppercase; 
+    margin:0 0 25px; /* كبرنا المسافة دي عشان نبعد التاريخ عن الصورة */
   }
 
-  /* --- Photo Styling (مع النزول لتحت) --- */
+  /* --- الصورة --- */
   .photo {
     width: 140px; 
     height: 140px; 
     border-radius: 50%;
-    margin: 20px auto 15px; /* الرقم 20px بينزل الصورة لتحت */
+    margin: 25px auto 15px; /* مسافة مريحة من فوق */
     overflow: hidden;
     border: 1px solid var(--line);
     box-shadow: 0 0 0 6px var(--paper-deep), 0 12px 30px -12px rgba(44,38,32,.4);
   }
-  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   /* --- Schedule Section (الجدول واللوكيشن) --- */
   .schedule {
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
   .schedule-item {
     text-align: center;
@@ -300,7 +301,7 @@
     font-size: 20px;
     font-weight: 600;
     color: var(--ink);
-    margin: 0 0 4px;
+    margin: 0 0 6px;
     line-height: 1;
   }
   .sch-location {
@@ -310,7 +311,7 @@
     color: var(--gold);
     text-transform: uppercase;
     text-decoration: none;
-    border-bottom: 1px solid var(--gold);
+    border-bottom: 1px solid var(--gold); 
     padding-bottom: 2px;
     transition: all 0.3s ease;
     display: inline-flex;
@@ -318,10 +319,7 @@
     justify-content: center;
     gap: 4px;
   }
-  .sch-location svg {
-    width: 13px;
-    height: 13px;
-  }
+  .sch-location svg { width: 13px; height: 13px; }
   .sch-location:hover {
     color: var(--ink);
     border-bottom-color: var(--ink);
@@ -363,22 +361,28 @@
   .cal-menu a:last-child{ margin-bottom:0; }
 
   .credit{
-    text-align:center; margin-top:15px;
+    text-align:center; 
+    margin-top: 25px; /* كبرنا المسافة دي عشان نبعدها عن الزرار */
     font-family:"Cormorant Garamond", serif; font-style:italic;
     font-size:12px; color:var(--ink-soft);
   }
 
-  /* ================= RESPONSIVE FIXES ================= */
+  /* ================= RESPONSIVE FIXES (حل مشاكل المسافات على الموبايل) ================= */
   @media (max-width: 480px) {
-    .card { padding: 24px 15px 20px; }
-    .names { font-size: 34px; }
-    .photo { width: 120px; height: 120px; margin: 20px auto 12px; } /* نزلنا الصورة هنا للموبايل كمان */
-    .countdown { gap: 12px; margin-bottom: 15px; }
+    .card { padding: 25px 15px 30px; } /* كبرنا الهوامش فوق وتحت عشان الكارت يتنفس */
+    .names { font-size: 32px; }
+    .date { margin-bottom: 25px; } /* زق التاريخ بعيد عن الصورة */
+    
+    /* صغرنا الصورة سِنة بسيطة وزودنا المسافة اللي فوقها */
+    .photo { width: 110px; height: 110px; margin: 30px auto 15px; } 
+    
+    .countdown { gap: 10px; margin-bottom: 18px; }
     .countdown .num { font-size: 22px; }
     .countdown .sep { font-size: 18px; }
-    .cal-btn { padding: 10px 15px; }
-    .schedule { gap: 15px; margin-bottom: 15px; }
+    .cal-btn { padding: 12px 15px; }
+    .schedule { gap: 10px; margin-bottom: 18px; }
     .sch-time { font-size: 18px; }
+    .sch-location { font-size: 9px; }
   }
 </style>
 </head>
@@ -425,11 +429,12 @@
       <h1 class="names">Peter &amp; Mayvel</h1>
       <p class="date" id="dateLabel">15 · Oct · 2026</p>
 
+      <!-- الصورة -->
       <div class="photo">
         <img src="photo.jpeg" alt="Peter & Mayvel">
       </div>
 
-      <!-- تفاصيل المواعيد واللوكيشن (بالإنجليزي ومع الأيقونة) -->
+      <!-- تفاصيل المواعيد واللوكيشن -->
       <div class="schedule">
         <div class="schedule-item">
           <p class="sch-title">Ceremony</p>
