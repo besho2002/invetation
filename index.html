@@ -91,25 +91,33 @@
   }
   .scene-outer.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
 
-  .scene{
-    position:relative;
-    width:600px; height:410px;
-    transform-style: preserve-3d;
-    transform: rotateX(10deg) rotateY(0deg) rotate(-1.5deg);
-    transition: transform .25s ease-out;
-    will-change: transform;
-  }
+  .scene {
+  position: relative;
+  width: 85vw; /* عرض متجاوب يملى 85% من شاشة الموبايل */
+  max-width: 400px; /* أقصى عرض للشاشات الكبيرة */
+  aspect-ratio: 600 / 410; /* بيحافظ على أبعاد الظرف الأصلية بدون تشوه */
+  transform-style: preserve-3d;
+  transform: rotateX(10deg) rotateY(0deg) rotate(-1.5deg);
+  transition: transform .25s ease-out;
+  will-change: transform;
+}
 
-  .table-shadow{
-    position:absolute;
-    left:50%; bottom:-34px; width:250px; height:34px;
-    transform:translateX(-50%);
-    background: radial-gradient(ellipse at center, rgba(44,38,32,.35) 0%, rgba(44,38,32,0) 72%);
-    filter:blur(2px);
-    transition: all .5s ease;
-  }
-  .scene.open .table-shadow{ width:210px; opacity:.7; }
+.table-shadow {
+  position: absolute;
+  left: 50%; 
+  bottom: -34px; 
+  width: 75%; /* نسبة مئوية بدل من 250px عشان يكبر ويصغر مع الظرف */
+  height: 34px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, rgba(44,38,32,.35) 0%, rgba(44,38,32,0) 72%);
+  filter: blur(2px);
+  transition: all .5s ease;
+}
 
+.scene.open .table-shadow { 
+  width: 60%; /* نسبة مئوية بدل من 210px */
+  opacity: .7; 
+}
   .envelope{
     position:absolute; inset:0;
     transform-style: preserve-3d;
@@ -358,7 +366,7 @@
       <p class="date" id="dateLabel">15 · Oct · 2026</p>
 
       <div class="photo">
-        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=80" alt="Layla and Omar">
+        <img src="photo?w=400&q=80" alt="Peter & Mayvel">
       </div>
 
       <div class="countdown" id="countdown">
