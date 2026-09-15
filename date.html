@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Layla & Omar — Save the Date</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Mrs+Saint+Delafield&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+
+<!--
+  ══════════════════════════════════════════════════════════════════
+  EDIT ME — everything you need to personalize is down in <script>,
+  in the CONFIG object, plus the names/photo in the HTML below.
+  ══════════════════════════════════════════════════════════════════
+-->
+<style>
+  :root{
+    --paper:      #f6f1e9;
+    --paper-deep: #ece0cc;
+    --paper-dark: #ddcdac;
+    --ink:        #2c2620;
+    --ink-soft:   #6b6055;
+    --gold:       #a4823f;
+    --gold-hi:    #d9b871;
+    --sage:       #7c8a72;
+    --line:       rgba(44,38,32,0.28);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 800px at 50% -10%, #fffdf9 0%, var(--paper) 55%, var(--paper-deep) 100%);
+    font-family:"Cormorant Garamond", serif;
+    color:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* subtle paper grain overlay across the whole page */
+  body::after{
+    content:"";
+    position:fixed; inset:0; pointer-events:none; z-index:50;
+    opacity:.05; mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    height:100vh;
+    max-height:860px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  /* ---------- falling petals ---------- */
+  .petals{ position:fixed; inset:0; pointer-events:none; z-index:5; }
+  .petal{
+    position:absolute; top:-5%;
+    width:10px; height:10px;
+    background: var(--sage);
+    opacity:0.55;
+    border-radius: 0 60% 0 60%;
+    animation: fall linear infinite;
+    filter:drop-shadow(0 2px 2px rgba(0,0,0,.08));
+  }
+  @keyframes fall{
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); }
+    100% { transform: translateY(110vh) translateX(var(--drift,20px)) rotate(200deg); }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .petal{ animation: none; display:none; }
+  }
+
+  /* ================= 3D SCENE ================= */
+  .scene-outer{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    z-index:10;
+    perspective: 1600px;
+    transition: opacity .6s ease .1s, visibility .6s ease .1s;
+  }
+  .scene-outer.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+
+  .scene{
+    position:relative;
+    width:300px; height:210px;
+    transform-style: preserve-3d;
+    transform: rotateX(10deg) rotateY(0deg) rotate(-1.5deg);
+    transition: transform .25s ease-out;
+    will-change: transform;
+  }
+
+  .table-shadow{
+    position:absolute;
+    left:50%; bottom:-34px; width:250px; height:34px;
+    transform:translateX(-50%);
+    background: radial-gradient(ellipse at center, rgba(44,38,32,.35) 0%, rgba(44,38,32,0) 72%);
+    filter:blur(2px);
+    transition: all .5s ease;
+  }
+  .scene.open .table-shadow{ width:210px; opacity:.7; }
+
+  .envelope{
+    position:absolute; inset:0;
+    transform-style: preserve-3d;
+    cursor:pointer;
+  }
+
+  .paper-tex{
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/></svg>");
+    background-blend-mode: multiply;
+  }
+
+  .env-back{
+    position:absolute; inset:0;
+    background: linear-gradient(155deg, #fbf7ef, var(--paper) 45%, var(--paper-deep) 100%);
+    box-shadow:
+      0 2px 1px rgba(255,255,255,.5) inset,
+      0 -6px 14px -10px rgba(44,38,32,.4) inset,
+      0 28px 50px -18px rgba(44,38,32,.45);
+    transform: translateZ(0px);
+  }
+
+  .letter{
+    position:absolute; left:6%; right:6%; top:10%;
+    height:78%;
+    background: linear-gradient(160deg, #fffdf8, var(--paper) 60%);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 10px 20px -8px rgba(44,38,32,.25);
+    transform: translateZ(2px) translateY(6%);
+    transition: transform 1.1s cubic-bezier(.5,.05,.15,1), box-shadow 1.1s ease;
+    display:flex; align-items:center; justify-content:center;
+    z-index:2;
+  }
+  .letter-face{ text-align:center; opacity:.85; }
+  .letter-face .ornament{ margin-bottom:6px; }
+  .letter-face .ornament svg{ width:26px; height:11px; stroke:var(--gold); fill:none; stroke-width:1; }
+  .letter-mono{
+    font-family:"Mrs Saint Delafield", cursive;
+    font-size:24px; color:var(--ink-soft); margin:0;
+  }
+  .scene.pull .letter{
+    transform: translateZ(60px) translateY(-64%) rotateX(-6deg);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 40px 70px -20px rgba(44,38,32,.5);
+  }
+
+  .fold{
+    position:absolute; inset:0;
+    transform-style:preserve-3d;
+  }
+  .fold-side{
+    position:absolute; top:0; width:52%; height:100%;
+    background: linear-gradient(100deg, rgba(44,38,32,.10), rgba(44,38,32,0) 60%);
+    z-index:3;
+  }
+  .fold-left{ left:0; clip-path:polygon(0 0,0 100%,100% 52%); }
+  .fold-right{ right:0; clip-path:polygon(100% 0,100% 100%,0 52%);
+    background: linear-gradient(260deg, rgba(44,38,32,.10), rgba(44,38,32,0) 60%); }
+
+  .fold-bottom{
+    position:absolute; left:0; right:0; bottom:0; height:64%;
+    background: linear-gradient(0deg, var(--paper-dark), var(--paper) 75%);
+    clip-path: polygon(0 100%, 100% 100%, 50% 30%);
+    z-index:4;
+    box-shadow: 0 -1px 0 rgba(255,255,255,.5) inset;
+  }
+
+  .flap-top{
+    position:absolute; top:0; left:0; right:0; height:100%;
+    background: linear-gradient(165deg, #fbf7ef, var(--paper-deep) 70%, var(--paper-dark));
+    clip-path: polygon(0 0, 100% 0, 50% 62%);
+    transform-origin: top center;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transition: transform 1s cubic-bezier(.6,.05,.28,1);
+    box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 12px 18px -14px rgba(44,38,32,.5);
+    z-index:6;
+  }
+  .scene.open .flap-top{ transform: rotateX(178deg) translateZ(1px); }
+
+  .seal{
+    position:absolute; top:44%; left:50%;
+    transform:translate(-50%,-50%) translateZ(4px);
+    width:52px; height:52px; border-radius:50%;
+    background: radial-gradient(circle at 32% 28%, var(--gold-hi), var(--gold) 55%, #7d5f27 100%);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:
+      0 3px 4px rgba(255,255,255,.25) inset,
+      0 -4px 8px rgba(0,0,0,.3) inset,
+      0 8px 16px rgba(90,66,20,.45);
+    z-index:7;
+    transition: transform .45s ease, opacity .45s ease;
+  }
+  .scene.open .seal{ transform:translate(-50%,-50%) translateZ(4px) scale(0.3); opacity:0; }
+  .seal span{
+    font-family:"Mrs Saint Delafield", cursive;
+    font-size:24px; color:#fbeed0; line-height:1;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+  }
+
+  .hint{
+    position:absolute; left:0; right:0; bottom:14%;
+    text-align:center; font-family:"Jost",sans-serif;
+    font-size:11px; letter-spacing:.22em; color:var(--ink-soft);
+    text-transform:uppercase;
+    transition: opacity .3s ease;
+    z-index:11;
+  }
+  .scene-outer.hint-hidden .hint{ opacity:0; }
+
+  /* ================= CARD ================= */
+  .card-wrap{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    padding:28px 20px;
+    opacity:0; transform:translateY(18px) scale(.96);
+    transition: opacity .8s ease, transform .8s ease;
+    z-index:8;
+  }
+  .card-wrap.show{ opacity:1; transform:translateY(0) scale(1); }
+
+  .card{
+    position:relative;
+    width:100%; max-width:340px;
+    padding:34px 26px 28px;
+    background:var(--paper);
+    border:1px solid var(--line);
+    box-shadow:0 30px 70px -25px rgba(44,38,32,0.4);
+  }
+  .card::before{
+    content:""; position:absolute; inset:10px;
+    border:1px solid var(--line);
+    pointer-events:none;
+  }
+
+  .ornament{ text-align:center; margin-bottom:10px; }
+  .ornament svg{ width:34px; height:14px; fill:none; stroke:var(--gold); stroke-width:1; }
+
+  .eyebrow{
+    text-align:center; font-family:"Jost",sans-serif;
+    font-size:11px; letter-spacing:.28em; text-transform:uppercase;
+    color:var(--ink-soft); margin:0 0 6px;
+  }
+  .names{
+    text-align:center; font-family:"Mrs Saint Delafield", cursive;
+    font-size:44px; line-height:1; color:var(--ink); margin:0 0 8px;
+  }
+  .date{
+    text-align:center; font-family:"Jost",sans-serif;
+    font-size:12px; letter-spacing:.2em; color:var(--gold);
+    text-transform:uppercase; margin:0 0 20px;
+  }
+
+  .photo{
+    width:168px; height:168px; border-radius:50%;
+    margin:0 auto 20px; overflow:hidden;
+    border:1px solid var(--line);
+    box-shadow: 0 0 0 6px var(--paper-deep), 0 12px 30px -12px rgba(44,38,32,.4);
+  }
+  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  .countdown{
+    display:flex; justify-content:center; gap:18px;
+    margin-bottom:20px;
+  }
+  .countdown div{ text-align:center; }
+  .countdown .num{ font-size:26px; line-height:1; color:var(--ink); }
+  .countdown .lbl{
+    font-family:"Jost",sans-serif; font-size:9px; letter-spacing:.18em;
+    color:var(--ink-soft); text-transform:uppercase; margin-top:4px;
+  }
+  .countdown .sep{ font-size:22px; color:var(--line); align-self:flex-start; margin-top:2px; }
+
+  .cal-wrap{ position:relative; }
+  .cal-btn{
+    display:block; width:100%; padding:13px 18px;
+    background:var(--ink); color:var(--paper);
+    border:none; font-family:"Jost",sans-serif;
+    font-size:11px; letter-spacing:.2em; text-transform:uppercase;
+    cursor:pointer; text-align:center;
+  }
+  .cal-menu{
+    max-height:0; overflow:hidden; opacity:0;
+    transition: max-height .35s ease, opacity .3s ease, margin .35s ease;
+    margin-top:0;
+  }
+  .cal-wrap.open .cal-menu{ max-height:200px; opacity:1; margin-top:8px; }
+  .cal-menu a{
+    display:block; padding:10px 16px; margin-bottom:6px;
+    border:1px solid var(--line); text-decoration:none;
+    color:var(--ink); font-family:"Jost",sans-serif;
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase;
+    text-align:center; background:var(--paper-deep);
+  }
+  .cal-menu a:last-child{ margin-bottom:0; }
+
+  .credit{
+    text-align:center; margin-top:20px;
+    font-family:"Cormorant Garamond", serif; font-style:italic;
+    font-size:12px; color:var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<div class="petals" id="petals"></div>
+
+<div class="stage">
+
+  <!-- SCREEN 1 — 3D ENVELOPE -->
+  <div class="scene-outer" id="sceneOuter">
+    <div>
+      <div class="scene" id="scene">
+        <div class="table-shadow"></div>
+        <div class="envelope" id="envelope">
+          <div class="env-back paper-tex"></div>
+          <div class="letter">
+            <div class="letter-face">
+              <div class="ornament"><svg viewBox="0 0 26 11"><path d="M0 5 H9 M17 5 H26 M13 0 L13 10 M9 5 A4 4 0 0 1 17 5"/></svg></div>
+              <p class="letter-mono" id="letterMono">L&amp;O</p>
+            </div>
+          </div>
+          <div class="fold">
+            <div class="fold-side fold-left"></div>
+            <div class="fold-side fold-right"></div>
+          </div>
+          <div class="fold-bottom paper-tex"></div>
+          <div class="flap-top paper-tex">
+            <div class="seal"><span id="sealText">L&amp;O</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="hint">Tap to open</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2 — INVITATION CARD -->
+  <div class="card-wrap" id="cardWrap">
+    <div class="card">
+      <div class="ornament">
+        <svg viewBox="0 0 34 14"><path d="M0 7 H12 M22 7 H34 M17 1 L17 13 M12 7 A5 5 0 0 1 22 7"/></svg>
+      </div>
+      <p class="eyebrow">We are getting married</p>
+      <h1 class="names">Layla &amp; Omar</h1>
+      <p class="date" id="dateLabel">15 · June · 2027</p>
+
+      <div class="photo">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=80" alt="Layla and Omar">
+      </div>
+
+      <div class="countdown" id="countdown">
+        <div><div class="num" id="cd-days">--</div><div class="lbl">Days</div></div>
+        <div class="sep">·</div>
+        <div><div class="num" id="cd-hours">--</div><div class="lbl">Hours</div></div>
+        <div class="sep">·</div>
+        <div><div class="num" id="cd-mins">--</div><div class="lbl">Mins</div></div>
+      </div>
+
+      <div class="cal-wrap" id="calWrap">
+        <button class="cal-btn" id="calBtn">Add to calendar</button>
+        <div class="cal-menu" id="calMenu">
+          <a id="linkGoogle" href="#" target="_blank" rel="noopener">Google Calendar</a>
+          <a id="linkIcs" href="#" download="save-the-date.ics">Apple / iOS (.ics)</a>
+          <a id="linkOutlook" href="#" target="_blank" rel="noopener">Outlook / Other</a>
+        </div>
+      </div>
+
+      <p class="credit">We can't wait to celebrate with you</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   EDIT THESE — couple names, wedding date/time, photo, monogram
+   ══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  monogram: "L&O",
+  eventTitle: "Layla & Omar's Wedding",
+  weddingDateISO: "2027-06-15T18:00:00",
+  durationHours: 4,
+  location: "Cairo, Egypt"
+};
+
+/* ---------- petals background ---------- */
+const petalHost = document.getElementById('petals');
+for(let i=0;i<18;i++){
+  const p = document.createElement('div');
+  p.className='petal';
+  p.style.left = Math.random()*100+'vw';
+  p.style.setProperty('--drift', (Math.random()*60-30)+'px');
+  p.style.animationDuration = (10+Math.random()*10)+'s';
+  p.style.animationDelay = (Math.random()*-20)+'s';
+  p.style.opacity = 0.25 + Math.random()*0.4;
+  const scale = 0.6+Math.random()*0.8;
+  p.style.transform = `scale(${scale})`;
+  petalHost.appendChild(p);
+}
+
+/* ---------- pointer parallax tilt (desktop) ---------- */
+const sceneOuter = document.getElementById('sceneOuter');
+const scene = document.getElementById('scene');
+let tiltEnabled = true;
+sceneOuter.addEventListener('pointermove', (e) => {
+  if(!tiltEnabled) return;
+  const r = sceneOuter.getBoundingClientRect();
+  const px = (e.clientX - r.left)/r.width - 0.5;
+  const py = (e.clientY - r.top)/r.height - 0.5;
+  scene.style.transform = `rotateX(${10 - py*10}deg) rotateY(${px*14}deg) rotate(-1.5deg)`;
+});
+sceneOuter.addEventListener('pointerleave', () => {
+  scene.style.transform = `rotateX(10deg) rotateY(0deg) rotate(-1.5deg)`;
+});
+
+/* ---------- envelope open sequence ---------- */
+const envelope = document.getElementById('envelope');
+const cardWrap = document.getElementById('cardWrap');
+
+envelope.addEventListener('click', () => {
+  if(scene.classList.contains('open')) return;
+  tiltEnabled = false;
+  sceneOuter.classList.add('hint-hidden');
+
+  scene.classList.add('open');                 // flap opens, seal shrinks
+  setTimeout(() => scene.classList.add('pull'), 420);   // letter slides out of pocket
+
+  setTimeout(() => {
+    sceneOuter.classList.add('hidden');
+    cardWrap.classList.add('show');
+  }, 1350);
+});
+
+/* ---------- countdown ---------- */
+const weddingDate = new Date(CONFIG.weddingDateISO);
+function tick(){
+  const now = new Date();
+  let diff = weddingDate - now;
+  if(diff < 0) diff = 0;
+  const days  = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor(diff/(1000*60*60)%24);
+  const mins  = Math.floor(diff/(1000*60)%60);
+  document.getElementById('cd-days').textContent  = days;
+  document.getElementById('cd-hours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('cd-mins').textContent  = String(mins).padStart(2,'0');
+}
+tick();
+setInterval(tick, 1000*30);
+
+/* ---------- date label ---------- */
+document.getElementById('dateLabel').textContent =
+  weddingDate.toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'}).split(' ').join(' · ');
+
+/* ---------- add to calendar ---------- */
+const calWrap = document.getElementById('calWrap');
+const calBtn  = document.getElementById('calBtn');
+calBtn.addEventListener('click', () => calWrap.classList.toggle('open'));
+
+function fmt(d){
+  return d.toISOString().replace(/[-:]/g,'').split('.')[0]+'Z';
+}
+const start = weddingDate;
+const end   = new Date(start.getTime() + CONFIG.durationHours*60*60*1000);
+
+document.getElementById('linkGoogle').href =
+  `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(CONFIG.eventTitle)}&dates=${fmt(start)}/${fmt(end)}&location=${encodeURIComponent(CONFIG.location)}`;
+
+document.getElementById('linkOutlook').href =
+  `https://outlook.live.com/calendar/0/deeplink/compose?subject=${encodeURIComponent(CONFIG.eventTitle)}&startdt=${start.toISOString()}&enddt=${end.toISOString()}&location=${encodeURIComponent(CONFIG.location)}`;
+
+const icsContent = [
+  'BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',
+  `SUMMARY:${CONFIG.eventTitle}`,
+  `DTSTART:${fmt(start)}`,
+  `DTEND:${fmt(end)}`,
+  `LOCATION:${CONFIG.location}`,
+  'END:VEVENT','END:VCALENDAR'
+].join('\r\n');
+document.getElementById('linkIcs').href = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsContent);
+
+/* monogram + title */
+document.getElementById('sealText').textContent = CONFIG.monogram;
+document.getElementById('letterMono').textContent = CONFIG.monogram;
+document.title = CONFIG.eventTitle;
+</script>
+
+</body>
+</html>
