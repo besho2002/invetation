@@ -6,7 +6,7 @@
 <title>Peter & Mayvel — Save the Date</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Mrs+Saint+Delafield&family=Jost:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Mrs+Saint+Delafield&family=Jost:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
   :root{
@@ -143,8 +143,12 @@
   .letter-face .ornament{ margin-bottom:6px; }
   .letter-face .ornament svg{ width:26px; height:11px; stroke:var(--gold); fill:none; stroke-width:1; }
   .letter-mono{
-    font-family:"Mrs Saint Delafield", cursive;
-    font-size:24px; color:var(--ink-soft); margin:0;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 28px; 
+    color: var(--ink-soft); 
+    margin: 0;
   }
   .scene.pull .letter{
     transform: translateZ(60px) translateY(-64%) rotateX(-6deg);
@@ -202,8 +206,12 @@
   }
   .scene.open .seal{ transform:translate(-50%,-50%) translateZ(4px) scale(0.3); opacity:0; }
   .seal span{
-    font-family:"Mrs Saint Delafield", cursive;
-    font-size:24px; color:#fbeed0; line-height:1;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 26px; 
+    color: #fbeed0; 
+    line-height: 1;
     text-shadow: 0 1px 1px rgba(0,0,0,.3);
   }
 
@@ -254,15 +262,24 @@
     font-size:11px; letter-spacing:.28em; text-transform:uppercase;
     color:var(--ink-soft); margin:0 0 6px;
   }
-  .names{
-    text-align:center; font-family:"Mrs Saint Delafield", cursive;
-    font-size:44px; line-height:1; color:var(--ink); margin:0 0 8px;
+  
+  /* --- هنا التعديل بتاع الأسماء --- */
+  .names {
+    text-align: center; 
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 40px; 
+    line-height: 1; 
+    color: var(--ink); 
+    margin: 0 0 12px;
   }
+  
   .date{
     text-align:center; font-family:"Jost",sans-serif;
     font-size:12px; letter-spacing:.2em; color:var(--gold);
     text-transform:uppercase; 
-    margin:0 0 25px; /* كبرنا المسافة دي عشان نبعد التاريخ عن الصورة */
+    margin:0 0 25px; 
   }
 
   /* --- الصورة --- */
@@ -270,7 +287,7 @@
     width: 140px; 
     height: 140px; 
     border-radius: 50%;
-    margin: 35px auto 15px; /* مسافة مريحة من فوق */
+    margin: 25px auto 15px;
     overflow: hidden;
     border: 1px solid var(--line);
     box-shadow: 0 0 0 6px var(--paper-deep), 0 12px 30px -12px rgba(44,38,32,.4);
@@ -362,18 +379,17 @@
 
   .credit{
     text-align:center; 
-    margin-top: 25px; /* كبرنا المسافة دي عشان نبعدها عن الزرار */
+    margin-top: 25px; 
     font-family:"Cormorant Garamond", serif; font-style:italic;
     font-size:12px; color:var(--ink-soft);
   }
 
-  /* ================= RESPONSIVE FIXES (حل مشاكل المسافات على الموبايل) ================= */
+  /* ================= RESPONSIVE FIXES ================= */
   @media (max-width: 480px) {
-    .card { padding: 25px 15px 30px; } /* كبرنا الهوامش فوق وتحت عشان الكارت يتنفس */
-    .names { font-size: 32px; }
-    .date { margin-bottom: 25px; } /* زق التاريخ بعيد عن الصورة */
+    .card { padding: 25px 15px 30px; } 
+    .names { font-size: 32px; } /* صغرنا حجم الخط شوية للموبايل عشان ميبقاش ضخم */
+    .date { margin-bottom: 25px; } 
     
-    /* صغرنا الصورة سِنة بسيطة وزودنا المسافة اللي فوقها */
     .photo { width: 110px; height: 110px; margin: 30px auto 15px; } 
     
     .countdown { gap: 10px; margin-bottom: 18px; }
