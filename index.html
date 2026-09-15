@@ -264,14 +264,17 @@
     text-transform:uppercase; margin:0 0 15px;
   }
 
-  .photo{
-    width:140px; height:140px; border-radius:50%;
-    margin:0 auto 15px; overflow:hidden;
-    border:1px solid var(--line);
+  .photo {
+    width: 140px; 
+    height: 140px; 
+    border-radius: 50%;
+    margin: 15px auto 15px; /* خلينا أول رقم 15px عشان يزق الصورة لتحت */
+    overflow: hidden;
+    border: 1px solid var(--line);
     box-shadow: 0 0 0 6px var(--paper-deep), 0 12px 30px -12px rgba(44,38,32,.4);
   }
-  .photo img{ width:100%; height:100%; object-fit:cover; display:block; }
-
+.photo { width: 120px; height: 120px; margin: 15px auto 15px; } /* ظبطنا المسافة هنا كمان */
+  
   /* --- Schedule Section (الجدول واللوكيشن) --- */
   .schedule {
     display: flex;
@@ -428,21 +431,22 @@
 
       <!-- تفاصيل المواعيد واللوكيشن -->
       <!-- تفاصيل المواعيد واللوكيشن -->
+     <!-- تفاصيل المواعيد واللوكيشن -->
       <div class="schedule">
         <div class="schedule-item">
-          <p class="sch-title">إكليل الكنيسة</p>
+          <p class="sch-title">Ceremony</p>
           <p class="sch-time">5:00 PM</p>
           <a href="https://www.google.com/maps/search/?api=1&query=كنيسة+السيدة+العذراء+مريم+العاشر+من+رمضان" target="_blank" class="sch-location">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            كنيسة السيدة العذراء
+            Virgin Mary Church
           </a>
         </div>
         <div class="schedule-item">
-          <p class="sch-title">حفل الزفاف</p>
+          <p class="sch-title">Reception</p>
           <p class="sch-time">6:00 PM</p>
           <a href="https://maps.app.goo.gl/Dxb5V7zLDjWU8L287" target="_blank" class="sch-location">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            قاعة Royal House
+            Royal House Hall
           </a>
         </div>
       </div>
